@@ -18,8 +18,8 @@
 		1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */; };
 		1ED1C8A926A2B2EB00006E06 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */; };
 		1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */; };
-		1ED1C8AF26A2B30700006E06 /* DepthMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AD26A2B30700006E06 /* DepthMapViewController.swift */; };
-		1ED1C8B026A2B30700006E06 /* DepthMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AE26A2B30700006E06 /* DepthMap.storyboard */; };
+		1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */; };
+		1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +57,8 @@
 		1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
-		1ED1C8AD26A2B30700006E06 /* DepthMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthMapViewController.swift; sourceTree = "<group>"; };
-		1ED1C8AE26A2B30700006E06 /* DepthMap.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DepthMap.storyboard; sourceTree = "<group>"; };
+		1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanStencilViewController.swift; sourceTree = "<group>"; };
+		1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HumanStencil.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,18 +145,18 @@
 		1ED1C8AB26A2B2EF00006E06 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
-				1ED1C8AC26A2B2FC00006E06 /* Depth */,
+				1ED1C8AC26A2B2FC00006E06 /* HumanStencil */,
 			);
 			path = Samples;
 			sourceTree = "<group>";
 		};
-		1ED1C8AC26A2B2FC00006E06 /* Depth */ = {
+		1ED1C8AC26A2B2FC00006E06 /* HumanStencil */ = {
 			isa = PBXGroup;
 			children = (
-				1ED1C8AE26A2B30700006E06 /* DepthMap.storyboard */,
-				1ED1C8AD26A2B30700006E06 /* DepthMapViewController.swift */,
+				1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */,
+				1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */,
 			);
-			path = Depth;
+			path = HumanStencil;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ED1C8A726A2B2EB00006E06 /* Main.storyboard in Resources */,
-				1ED1C8B026A2B30700006E06 /* DepthMap.storyboard in Resources */,
+				1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */,
 				1ED1C88026A2B1FB00006E06 /* LaunchScreen.storyboard in Resources */,
 				1ED1C87D26A2B1FB00006E06 /* Assets.xcassets in Resources */,
 			);
@@ -296,7 +296,7 @@
 				1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */,
 				1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */,
 				1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */,
-				1ED1C8AF26A2B30700006E06 /* DepthMapViewController.swift in Sources */,
+				1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
