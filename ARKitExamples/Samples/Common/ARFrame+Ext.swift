@@ -23,9 +23,9 @@ extension ARFrame {
         return texture
     }
 
-    func buildCapturedImageTextures(frame: ARFrame, textureCache: CVMetalTextureCache) -> (textureY: CVMetalTexture, textureCbCr: CVMetalTexture)? {
+    func buildCapturedImageTextures(textureCache: CVMetalTextureCache) -> (textureY: CVMetalTexture, textureCbCr: CVMetalTexture)? {
         // Create two textures (Y and CbCr) from the provided frame's captured image
-        let pixelBuffer = frame.capturedImage
+        let pixelBuffer = self.capturedImage
         
         guard CVPixelBufferGetPlaneCount(pixelBuffer) < 2 else {
             return nil

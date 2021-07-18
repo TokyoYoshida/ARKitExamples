@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */; };
 		1E8671D926A4025F00B8F714 /* ARFrame+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */; };
+		1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */; };
 		1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87326A2B1F900006E06 /* AppDelegate.swift */; };
 		1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */; };
 		1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87726A2B1F900006E06 /* ViewController.swift */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Ext.swift"; sourceTree = "<group>"; };
 		1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARFrame+Ext.swift"; sourceTree = "<group>"; };
+		1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HumanStencilShaders.metal; sourceTree = "<group>"; };
+		1E8671DC26A403CD00B8F714 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		1ED1C87026A2B1F900006E06 /* ARKitExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED1C87326A2B1F900006E06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 			children = (
 				1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */,
 				1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */,
+				1E8671DC26A403CD00B8F714 /* ShaderTypes.h */,
+				1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */,
 			);
 			path = HumanStencil;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */,
 				1ED1C8A926A2B2EB00006E06 /* MenuViewController.swift in Sources */,
 				1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */,
+				1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */,
 				1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */,
 				1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */,
 				1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */,

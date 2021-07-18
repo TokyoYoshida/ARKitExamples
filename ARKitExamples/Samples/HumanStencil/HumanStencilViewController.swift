@@ -18,7 +18,8 @@ class HumanStencilViewController: UIViewController {
     private let device = MTLCreateSystemDefaultDevice()!
     private var commandQueue: MTLCommandQueue!
     private var matteGenerator: ARMatteGenerator!
-    lazy var textureCache: CVMetalTextureCache = {
+    private var renderPipeline: MTLRenderPipelineState!
+    lazy private var textureCache: CVMetalTextureCache = {
         var cache: CVMetalTextureCache?
         CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &cache)
         return cache!
@@ -47,9 +48,18 @@ class HumanStencilViewController: UIViewController {
             mtkView.framebufferOnly = false
         }
         func initMetal() {
+            func buildPipeline() {
+                guard let library = device.makeDefaultLibrary() else {fatalError()}
+                let descriptor = MTLRenderPipelineDescriptor()
+                descriptor.vertexFunction = library.makeFunction(name: "compositeImageVertexTransform")
+                descriptor.fragmentFunction = library.makeFunction(name: "compositeImageFragmentShader")
+                descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
+                renderPipeline = try! device.makeRenderPipelineState(descriptor: descriptor)
+            }
             commandQueue = device.makeCommandQueue()
             mtkView.device = device
             mtkView.delegate = self
+            buildPipeline()
         }
         func runARSession() {
             let configuration = ARWorldTrackingConfiguration()
@@ -82,30 +92,49 @@ extension HumanStencilViewController: MTKViewDelegate {
 
             return matteGenerator.generateMatte(from: currentFrame, commandBuffer: commandBuffer)
         }
+        func buildRenderEncoder(_ commandBuffer: MTLCommandBuffer) -> MTLRenderCommandEncoder? {
+            let rpd = view.currentRenderPassDescriptor
+            rpd?.colorAttachments[0].clearColor = MTLClearColorMake(0, 1, 0, 1)
+            rpd?.colorAttachments[0].loadAction = .clear
+            rpd?.colorAttachments[0].storeAction = .store
+            return commandBuffer.makeRenderCommandEncoder(descriptor: rpd!)
+        }
         guard let drawable = view.currentDrawable else {return}
         
         let commandBuffer = commandQueue.makeCommandBuffer()!
 
 //        guard let tex = getAlphaTexture(commandBuffer) else {return}
         guard let tex = session.currentFrame?.capturedImage.createTexture(pixelFormat: mtkView.colorPixelFormat , planeIndex: 0, capturedImageTextureCache: textureCache) else {return}
+        
+        guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
      
-        let w = min(tex.width, drawable.texture.width)
-        let h = min(tex.height, drawable.texture.height)
-        
-        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-        
-        blitEncoder.copy(from: tex,
-                          sourceSlice: 0,
-                          sourceLevel: 0,
-                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
-                          sourceSize: MTLSizeMake(w, h, tex.depth),
-                          to: drawable.texture,
-                          destinationSlice: 0,
-                          destinationLevel: 0,
-                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
-        
-        blitEncoder.endEncoding()
-        
+        guard let renderPipeline = renderPipeline else {return}
+        guard let renderEncoder = buildRenderEncoder(commandBuffer) else {return}
+
+        renderEncoder.setRenderPipelineState(renderPipeline)
+//        renderEncoder.setVertexBuffer(vertextBuffer, offset: 0, index: 0)
+        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureY), index: 0)
+        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureCbCr), index: 1)
+        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
+        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
+
+//        let w = min(tex.width, drawable.texture.width)
+//        let h = min(tex.height, drawable.texture.height)
+//        
+//        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+//        
+//        blitEncoder.copy(from: tex,
+//                          sourceSlice: 0,
+//                          sourceLevel: 0,
+//                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
+//                          sourceSize: MTLSizeMake(w, h, tex.depth),
+//                          to: drawable.texture,
+//                          destinationSlice: 0,
+//                          destinationLevel: 0,
+//                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
+//        
+//        blitEncoder.endEncoding()
+//        
         commandBuffer.present(drawable)
         
         commandBuffer.commit()
