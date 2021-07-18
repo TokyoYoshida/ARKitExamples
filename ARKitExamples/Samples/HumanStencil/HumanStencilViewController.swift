@@ -6,42 +6,72 @@
 //
 
 import RealityKit
-import ARKit
+import MetalKit
 
-class HumanStencilViewController: UIViewController, ARSessionDelegate {
+class HumanStencilViewController: UIViewController {
+    private let device = MTLCreateSystemDefaultDevice()!
+    private var commandQueue: MTLCommandQueue!
     
-    @IBOutlet var arView: ARView!
-    @IBOutlet weak var imageView: UIImageView!
-    
+    private var texture: MTLTexture!
+    var mtkView: MTKView {
+        return view as! MTKView
+    }
+
     var orientation: UIInterfaceOrientation {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
             fatalError()
         }
         return orientation
     }
-    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
-    lazy var imageViewSize: CGSize = {
-        CGSize(width: view.bounds.size.width, height: imageViewHeight.constant)
-    }()
 
     override func viewDidLoad() {
-        func buildConfigure() -> ARWorldTrackingConfiguration {
-            let configuration = ARWorldTrackingConfiguration()
-
-            configuration.environmentTexturing = .automatic
-            if type(of: configuration).supportsFrameSemantics(.sceneDepth) {
-               configuration.frameSemantics = .sceneDepth
-            }
-
-            return configuration
+        func loadTexture() {
+            let textureLoader = MTKTextureLoader(device: device)
+            texture = try! textureLoader.newTexture(name: "fuji", scaleFactor: view.contentScaleFactor, bundle: nil)
+            mtkView.colorPixelFormat = texture.pixelFormat
+            mtkView.framebufferOnly = false
+        }
+        func initMetal() {
+            commandQueue = device.makeCommandQueue()
+            mtkView.device = device
+            mtkView.delegate = self
+            loadTexture()
         }
         super.viewDidLoad()
-        
-        arView.session.delegate = self
-        let configuration = buildConfigure()
-        arView.session.run(configuration)
-    }
+        initMetal()
 
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
     }
 }
+
+extension HumanStencilViewController: MTKViewDelegate{
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    }
+    
+    func draw(in view: MTKView) {
+        guard let drawable = view.currentDrawable else {return}
+        
+        let commandBuffer = commandQueue.makeCommandBuffer()!
+     
+        let w = min(texture.width, drawable.texture.width)
+        let h = min(texture.height, drawable.texture.height)
+        
+        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+        
+        blitEncoder.copy(from: texture,
+                          sourceSlice: 0,
+                          sourceLevel: 0,
+                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
+                          sourceSize: MTLSizeMake(w, h, texture.depth),
+                          to: drawable.texture,
+                          destinationSlice: 0,
+                          destinationLevel: 0,
+                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
+        
+        blitEncoder.endEncoding()
+        
+        commandBuffer.present(drawable)
+        
+        commandBuffer.commit()
+    }
+}
+
