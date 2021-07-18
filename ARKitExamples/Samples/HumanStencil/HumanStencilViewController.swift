@@ -18,6 +18,11 @@ class HumanStencilViewController: UIViewController {
     private let device = MTLCreateSystemDefaultDevice()!
     private var commandQueue: MTLCommandQueue!
     private var matteGenerator: ARMatteGenerator!
+    lazy var textureCache: CVMetalTextureCache = {
+        var cache: CVMetalTextureCache?
+        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &cache)
+        return cache!
+    }()
 
     private var texture: MTLTexture!
     var mtkView: MTKView {
@@ -62,7 +67,6 @@ class HumanStencilViewController: UIViewController {
         initARSession()
         initMatteGenerator()
         initMetal()
-        loadTexture()
     }
 }
 
@@ -82,18 +86,19 @@ extension HumanStencilViewController: MTKViewDelegate {
         
         let commandBuffer = commandQueue.makeCommandBuffer()!
 
-        guard let alphaTexture = getAlphaTexture(commandBuffer) else {return}
+//        guard let tex = getAlphaTexture(commandBuffer) else {return}
+        guard let tex = session.currentFrame?.capturedImage.createTexture(pixelFormat: mtkView.colorPixelFormat , planeIndex: 0, capturedImageTextureCache: textureCache) else {return}
      
-        let w = min(alphaTexture.width, drawable.texture.width)
-        let h = min(alphaTexture.height, drawable.texture.height)
+        let w = min(tex.width, drawable.texture.width)
+        let h = min(tex.height, drawable.texture.height)
         
         let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
         
-        blitEncoder.copy(from: alphaTexture,
+        blitEncoder.copy(from: tex,
                           sourceSlice: 0,
                           sourceLevel: 0,
                           sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
-                          sourceSize: MTLSizeMake(w, h, alphaTexture.depth),
+                          sourceSize: MTLSizeMake(w, h, tex.depth),
                           to: drawable.texture,
                           destinationSlice: 0,
                           destinationLevel: 0,
