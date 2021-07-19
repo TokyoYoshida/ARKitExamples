@@ -63,6 +63,7 @@ class HumanStencilViewController: UIViewController {
             commandQueue = device.makeCommandQueue()
             mtkView.device = device
             mtkView.delegate = self
+            mtkView.framebufferOnly = false
             buildPipeline()
         }
         func runARSession() {
@@ -124,23 +125,25 @@ extension HumanStencilViewController: MTKViewDelegate {
 //        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
 //        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
-//        let w = min(tex.width, drawable.texture.width)
-//        let h = min(tex.height, drawable.texture.height)
-//        
-//        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-//        
-//        blitEncoder.copy(from: tex,
-//                          sourceSlice: 0,
-//                          sourceLevel: 0,
-//                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
-//                          sourceSize: MTLSizeMake(w, h, tex.depth),
-//                          to: drawable.texture,
-//                          destinationSlice: 0,
-//                          destinationLevel: 0,
-//                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
-//        
-//        blitEncoder.endEncoding()
-//        
+        guard let tex = ycbcrConverter.sceneColorTexture else {return}
+        
+        let w = min(tex.width, drawable.texture.width)
+        let h = min(tex.height, drawable.texture.height)
+        
+        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+        
+        blitEncoder.copy(from: tex,
+                          sourceSlice: 0,
+                          sourceLevel: 0,
+                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
+                          sourceSize: MTLSizeMake(w, h, tex.depth),
+                          to: drawable.texture,
+                          destinationSlice: 0,
+                          destinationLevel: 0,
+                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
+        
+        blitEncoder.endEncoding()
+        
         commandBuffer.present(drawable)
         
         commandBuffer.commit()
