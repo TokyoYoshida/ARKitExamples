@@ -371,9 +371,10 @@ float4 snoise_grad(float3 v)
 
 // Composite the image fragment function.
 fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]],
-                                    texture2d<float, access::sample> capturedImageTextureY [[ texture(0) ]],
-                                    texture2d<float, access::sample> capturedImageTextureCbCr [[ texture(1) ]],
-                                    texture2d<float, access::sample> alphaTexture [[ texture(4) ]])
+                                    texture2d<float, access::sample> sceneColorTexture [[ texture(0) ]],
+                                    texture2d<float, access::sample> capturedImageTextureY [[ texture(1) ]],
+                                    texture2d<float, access::sample> capturedImageTextureCbCr [[ texture(2) ]],
+                                    texture2d<float, access::sample> alphaTexture [[ texture(3) ]])
 {
     constexpr sampler s(address::clamp_to_edge, filter::linear);
 
@@ -384,7 +385,7 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
     float4 rgb = ycbcrToRGBTransform(capturedImageTextureY.sample(s, cameraTexCoord), capturedImageTextureCbCr.sample(s, cameraTexCoord));
 
     // Perform composition with the matting.
-//    half4 sceneColor = half4(sceneColorTexture.sample(s, sceneTexCoord));
+    half4 sceneColor = half4(sceneColorTexture.sample(s, sceneTexCoord));
 //    float sceneDepth = sceneDepthTexture.sample(s, sceneTexCoord);
 
     half4 cameraColor = half4(rgb);
@@ -408,8 +409,8 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
     );
     displacedUV = fract( sceneTexCoord + displacedUV );
 
-//    half4 displacedCol = half4(sceneColorTexture.sample(s, displacedUV));
-//    half4 occluderResult = mix(sceneColor, displacedCol, alpha);
+    half4 displacedCol = half4(1,0,0,1);
+    half4 occluderResult = mix(sceneColor, displacedCol, alpha);
 //    half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
     half4 mattingResult = half4(1,1,1,1);
     return mattingResult;

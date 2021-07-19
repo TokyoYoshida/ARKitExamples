@@ -11,8 +11,8 @@ import MetalKit
 import CoreImage
 
 class BlitRenderer {
-    let view: MTKView
-    let device: MTLDevice
+    private let view: MTKView
+    private let device: MTLDevice
     private var renderPipeline: MTLRenderPipelineState!
 
     init(device: MTLDevice, view: MTKView) {

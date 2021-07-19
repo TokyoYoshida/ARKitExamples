@@ -19,7 +19,6 @@ class HumanStencilViewController: UIViewController {
     private let device = MTLCreateSystemDefaultDevice()!
     private var commandQueue: MTLCommandQueue!
     private var matteGenerator: ARMatteGenerator!
-    private var renderPipeline: MTLRenderPipelineState!
     lazy private var textureCache: CVMetalTextureCache = {
         var cache: CVMetalTextureCache?
         CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &cache)
@@ -30,7 +29,7 @@ class HumanStencilViewController: UIViewController {
     var mtkView: MTKView {
         return view as! MTKView
     }
-    lazy private var renderer = BlitRenderer(device: device, view: mtkView)
+    lazy private var renderer = HumanStencilRenderer(device: device)
     
     // Human Stencil
     lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: mtkView)
@@ -53,19 +52,10 @@ class HumanStencilViewController: UIViewController {
             mtkView.framebufferOnly = false
         }
         func initMetal() {
-            func buildPipeline() {
-                guard let library = device.makeDefaultLibrary() else {fatalError()}
-                let descriptor = MTLRenderPipelineDescriptor()
-                descriptor.vertexFunction = library.makeFunction(name: "compositeImageVertexTransform")
-                descriptor.fragmentFunction = library.makeFunction(name: "compositeImageFragmentShader")
-                descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
-                renderPipeline = try! device.makeRenderPipelineState(descriptor: descriptor)
-            }
             commandQueue = device.makeCommandQueue()
             mtkView.device = device
             mtkView.delegate = self
             mtkView.framebufferOnly = false
-            buildPipeline()
         }
         func runARSession() {
             let configuration = ARWorldTrackingConfiguration()
@@ -109,28 +99,14 @@ extension HumanStencilViewController: MTKViewDelegate {
         
         let commandBuffer = commandQueue.makeCommandBuffer()!
 
-//        guard let tex = getAlphaTexture(commandBuffer) else {return}
         guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
 
         ycbcrConverter.compositeImagesWithEncoder(commandBuffer, textureY: textureY, textureCbCr: textureCbCr)
+                
+        guard let cameraTexture = ycbcrConverter.sceneColorTexture else {return}
         
-        
-        
-//        guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
-//
-//        guard let renderPipeline = renderPipeline else {return}
-//        guard let renderEncoder = buildRenderEncoder(commandBuffer) else {return}
-//
-//        renderEncoder.setRenderPipelineState(renderPipeline)
-////        renderEncoder.setVertexBuffer(vertextBuffer, offset: 0, index: 0)
-//        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureY), index: 0)
-//        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureCbCr), index: 1)
-//        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
-//        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
-
-        guard let tex = ycbcrConverter.sceneColorTexture else {return}
-        
-        renderer.update(commandBuffer, texture: tex)
+        guard let alphaTexture = getAlphaTexture(commandBuffer) else {return}
+        renderer.update(commandBuffer, cameraTexture: cameraTexture, textureY: CVMetalTextureGetTexture(textureY)!, textureCbCr: CVMetalTextureGetTexture(textureCbCr)!, alphaTexture: alphaTexture, drawable: drawable)
         
         
         commandBuffer.present(drawable)
