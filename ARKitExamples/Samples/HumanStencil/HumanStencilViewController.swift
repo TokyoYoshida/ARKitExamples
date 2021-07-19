@@ -8,6 +8,7 @@
 import ARKit
 import Metal
 import MetalKit
+import CoreImage
 
 class HumanStencilViewController: UIViewController {
     // ARKit
@@ -29,6 +30,9 @@ class HumanStencilViewController: UIViewController {
     var mtkView: MTKView {
         return view as! MTKView
     }
+    
+    // Human Stencil
+    lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: self.mtkView)
 
     var orientation: UIInterfaceOrientation {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
@@ -104,19 +108,21 @@ extension HumanStencilViewController: MTKViewDelegate {
         let commandBuffer = commandQueue.makeCommandBuffer()!
 
 //        guard let tex = getAlphaTexture(commandBuffer) else {return}
-        guard let tex = session.currentFrame?.capturedImage.createTexture(pixelFormat: mtkView.colorPixelFormat , planeIndex: 0, capturedImageTextureCache: textureCache) else {return}
-        
         guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
-     
-        guard let renderPipeline = renderPipeline else {return}
-        guard let renderEncoder = buildRenderEncoder(commandBuffer) else {return}
 
-        renderEncoder.setRenderPipelineState(renderPipeline)
-//        renderEncoder.setVertexBuffer(vertextBuffer, offset: 0, index: 0)
-        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureY), index: 0)
-        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureCbCr), index: 1)
-        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
-        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
+        ycbcrConverter.compositeImagesWithEncoder(commandBuffer, textureY: textureY, textureCbCr: textureCbCr)
+        
+//        guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
+//
+//        guard let renderPipeline = renderPipeline else {return}
+//        guard let renderEncoder = buildRenderEncoder(commandBuffer) else {return}
+//
+//        renderEncoder.setRenderPipelineState(renderPipeline)
+////        renderEncoder.setVertexBuffer(vertextBuffer, offset: 0, index: 0)
+//        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureY), index: 0)
+//        renderEncoder.setFragmentTexture(CVMetalTextureGetTexture(textureCbCr), index: 1)
+//        renderEncoder.setFragmentTexture(alphaTexture, index: 2)
+//        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
 //        let w = min(tex.width, drawable.texture.width)
 //        let h = min(tex.height, drawable.texture.height)
@@ -138,6 +144,9 @@ extension HumanStencilViewController: MTKViewDelegate {
         commandBuffer.present(drawable)
         
         commandBuffer.commit()
+        
+        commandBuffer.waitUntilCompleted()
+        let image = CIImage(mtlTexture: ycbcrConverter.sceneColorTexture, options:nil)
     }
 }
 

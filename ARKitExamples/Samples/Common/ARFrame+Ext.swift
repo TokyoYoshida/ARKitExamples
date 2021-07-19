@@ -27,7 +27,7 @@ extension ARFrame {
         // Create two textures (Y and CbCr) from the provided frame's captured image
         let pixelBuffer = self.capturedImage
         
-        guard CVPixelBufferGetPlaneCount(pixelBuffer) < 2 else {
+        guard CVPixelBufferGetPlaneCount(pixelBuffer) >= 2 else {
             return nil
         }
         

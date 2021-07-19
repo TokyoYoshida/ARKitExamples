@@ -384,22 +384,22 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
     float4 rgb = ycbcrToRGBTransform(capturedImageTextureY.sample(s, cameraTexCoord), capturedImageTextureCbCr.sample(s, cameraTexCoord));
 
     // Perform composition with the matting.
-    half4 sceneColor = half4(sceneColorTexture.sample(s, sceneTexCoord));
-    float sceneDepth = sceneDepthTexture.sample(s, sceneTexCoord);
+//    half4 sceneColor = half4(sceneColorTexture.sample(s, sceneTexCoord));
+//    float sceneDepth = sceneDepthTexture.sample(s, sceneTexCoord);
 
     half4 cameraColor = half4(rgb);
     half alpha = half(alphaTexture.sample(s, cameraTexCoord).r);
 
     half showOccluder = 1.0;
 
-    if (uniforms.useDepth) {
-        float dilatedLinearDepth = half(dilatedDepthTexture.sample(s, cameraTexCoord).r);
-
-        // Project linear depth with the projection matrix.
-        float dilatedDepth = clamp((uniforms.projectionMatrix[2][2] * -dilatedLinearDepth + uniforms.projectionMatrix[3][2]) / (uniforms.projectionMatrix[2][3] * -dilatedLinearDepth + uniforms.projectionMatrix[3][3]), 0.0, 1.0);
-
-        showOccluder = (half)step(dilatedDepth, sceneDepth); // forwardZ case
-    }
+//    if (uniforms.useDepth) {
+//        float dilatedLinearDepth = half(dilatedDepthTexture.sample(s, cameraTexCoord).r);
+//
+//        // Project linear depth with the projection matrix.
+//        float dilatedDepth = clamp((uniforms.projectionMatrix[2][2] * -dilatedLinearDepth + uniforms.projectionMatrix[3][2]) / (uniforms.projectionMatrix[2][3] * -dilatedLinearDepth + uniforms.projectionMatrix[3][3]), 0.0, 1.0);
+//
+//        showOccluder = (half)step(dilatedDepth, sceneDepth); // forwardZ case
+//    }
 
     float2 _Time = float2(0,0);
     float2 displacedUV = float2(
@@ -408,9 +408,10 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
     );
     displacedUV = fract( sceneTexCoord + displacedUV );
 
-    half4 displacedCol = half4(sceneColorTexture.sample(s, displacedUV));
-    half4 occluderResult = mix(sceneColor, displacedCol, alpha);
-    half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
+//    half4 displacedCol = half4(sceneColorTexture.sample(s, displacedUV));
+//    half4 occluderResult = mix(sceneColor, displacedCol, alpha);
+//    half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
+    half4 mattingResult = half4(1,1,1,1);
     return mattingResult;
 }
 

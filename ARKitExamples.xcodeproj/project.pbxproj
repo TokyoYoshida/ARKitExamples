@@ -23,6 +23,7 @@
 		1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */; };
 		1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */; };
 		1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */; };
+		1ED6B28826A5636700FBA225 /* YCbCrToRGBConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +47,6 @@
 		1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Ext.swift"; sourceTree = "<group>"; };
 		1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARFrame+Ext.swift"; sourceTree = "<group>"; };
 		1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HumanStencilShaders.metal; sourceTree = "<group>"; };
-		1E8671DC26A403CD00B8F714 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		1ED1C87026A2B1F900006E06 /* ARKitExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED1C87326A2B1F900006E06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +66,8 @@
 		1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
 		1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanStencilViewController.swift; sourceTree = "<group>"; };
 		1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HumanStencil.storyboard; sourceTree = "<group>"; };
+		1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YCbCrToRGBConverter.swift; sourceTree = "<group>"; };
+		1ED6B28D26A5685000FBA225 /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +174,8 @@
 			children = (
 				1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */,
 				1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */,
-				1E8671DC26A403CD00B8F714 /* ShaderTypes.h */,
+				1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */,
+				1ED6B28D26A5685000FBA225 /* ShaderTypes.h */,
 				1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */,
 			);
 			path = HumanStencil;
@@ -315,6 +318,7 @@
 				1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */,
 				1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */,
 				1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */,
+				1ED6B28826A5636700FBA225 /* YCbCrToRGBConverter.swift in Sources */,
 				1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */,
 				1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */,
 				1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */,
@@ -495,6 +499,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Examples.app.ARKitExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ARKitExamples/Samples/HumanStencil/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -514,6 +519,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Examples.app.ARKitExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ARKitExamples/Samples/HumanStencil/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
