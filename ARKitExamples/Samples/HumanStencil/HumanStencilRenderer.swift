@@ -27,7 +27,7 @@ class HumanStencilRenderer {
             guard let library = device.makeDefaultLibrary() else {fatalError()}
             let descriptor = MTLRenderPipelineDescriptor()
             descriptor.vertexFunction = library.makeFunction(name: "simpleVertexShader")
-            descriptor.fragmentFunction = library.makeFunction(name: "simpleFragmentShader")
+            descriptor.fragmentFunction = library.makeFunction(name: "compositeImageFragmentShader")
             descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
             renderPipeline = try! device.makeRenderPipelineState(descriptor: descriptor)
         }

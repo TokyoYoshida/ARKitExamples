@@ -411,8 +411,8 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
 
     half4 displacedCol = half4(1,0,0,1);
     half4 occluderResult = mix(sceneColor, displacedCol, alpha);
-//    half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
-    half4 mattingResult = half4(1,1,1,1);
+    half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
+//    half4 mattingResult = half4(1,1,1,1);
     return mattingResult;
 }
 
