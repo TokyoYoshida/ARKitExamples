@@ -52,7 +52,8 @@ class YCbCrToRGBConverter {
     
     func compositeImagesWithEncoder(_ commandBuffer: MTLCommandBuffer, textureY: CVMetalTexture, textureCbCr: CVMetalTexture) {
         func buildRenderEncoer() -> MTLRenderCommandEncoder? {
-            guard let sceneRenderDescriptor = view.copy() as? MTLRenderPassDescriptor else {
+            guard let renderPassDescriptor = view.currentRenderPassDescriptor,
+                  let sceneRenderDescriptor = renderPassDescriptor.copy() as? MTLRenderPassDescriptor else {
                 fatalError("Unable to create a render pass descriptor.")
             }
             sceneRenderDescriptor.colorAttachments[0].texture = sceneColorTexture
