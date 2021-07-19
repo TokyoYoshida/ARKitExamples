@@ -30,9 +30,10 @@ class HumanStencilViewController: UIViewController {
     var mtkView: MTKView {
         return view as! MTKView
     }
+    lazy private var renderer = BlitRenderer(device: device, view: mtkView)
     
     // Human Stencil
-    lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: self.mtkView)
+    lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: mtkView)
 
     var orientation: UIInterfaceOrientation {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
@@ -113,6 +114,8 @@ extension HumanStencilViewController: MTKViewDelegate {
 
         ycbcrConverter.compositeImagesWithEncoder(commandBuffer, textureY: textureY, textureCbCr: textureCbCr)
         
+        
+        
 //        guard let (textureY, textureCbCr) = session.currentFrame?.buildCapturedImageTextures(textureCache: textureCache) else {return}
 //
 //        guard let renderPipeline = renderPipeline else {return}
@@ -127,22 +130,8 @@ extension HumanStencilViewController: MTKViewDelegate {
 
         guard let tex = ycbcrConverter.sceneColorTexture else {return}
         
-        let w = min(tex.width, drawable.texture.width)
-        let h = min(tex.height, drawable.texture.height)
+        renderer.update(commandBuffer, texture: tex)
         
-        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-        
-        blitEncoder.copy(from: tex,
-                          sourceSlice: 0,
-                          sourceLevel: 0,
-                          sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
-                          sourceSize: MTLSizeMake(w, h, tex.depth),
-                          to: drawable.texture,
-                          destinationSlice: 0,
-                          destinationLevel: 0,
-                          destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
-        
-        blitEncoder.endEncoding()
         
         commandBuffer.present(drawable)
         

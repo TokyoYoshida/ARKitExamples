@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E30B33226A57FE00019CA0A /* BlitRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30B33126A57FE00019CA0A /* BlitRenderer.swift */; };
 		1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */; };
 		1E8671D926A4025F00B8F714 /* ARFrame+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */; };
 		1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E30B33126A57FE00019CA0A /* BlitRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlitRenderer.swift; sourceTree = "<group>"; };
 		1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Ext.swift"; sourceTree = "<group>"; };
 		1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARFrame+Ext.swift"; sourceTree = "<group>"; };
 		1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HumanStencilShaders.metal; sourceTree = "<group>"; };
@@ -100,6 +102,8 @@
 			children = (
 				1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */,
 				1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */,
+				1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */,
+				1E30B33126A57FE00019CA0A /* BlitRenderer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -174,7 +178,6 @@
 			children = (
 				1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */,
 				1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */,
-				1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */,
 				1ED6B28D26A5685000FBA225 /* ShaderTypes.h */,
 				1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */,
 			);
@@ -316,6 +319,7 @@
 				1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */,
 				1ED1C8A926A2B2EB00006E06 /* MenuViewController.swift in Sources */,
 				1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */,
+				1E30B33226A57FE00019CA0A /* BlitRenderer.swift in Sources */,
 				1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */,
 				1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */,
 				1ED6B28826A5636700FBA225 /* YCbCrToRGBConverter.swift in Sources */,
