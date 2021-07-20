@@ -18,13 +18,22 @@
                             <mtkView contentMode="scaleToFill" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" translatesAutoresizingMaskIntoConstraints="NO" id="Q9m-m9-ZwI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mtkView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GsL-IN-YJt">
+                                <rect key="frame" x="189.5" y="836" width="35" height="30"/>
+                                <state key="normal" title="Scan"/>
+                                <connections>
+                                    <action selector="tappedScanButton:" destination="jMM-95-Y9l" eventType="touchUpInside" id="TXy-XT-bem"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Q9m-m9-ZwI" firstAttribute="bottom" secondItem="jaN-Je-vcn" secondAttribute="bottom" id="4md-ES-0Jm"/>
+                            <constraint firstItem="GsL-IN-YJt" firstAttribute="centerX" secondItem="jaN-Je-vcn" secondAttribute="centerX" id="I0U-bi-mBH"/>
                             <constraint firstItem="Q9m-m9-ZwI" firstAttribute="top" secondItem="jaN-Je-vcn" secondAttribute="top" id="MeO-Oj-fyf"/>
                             <constraint firstItem="Q9m-m9-ZwI" firstAttribute="leading" secondItem="jaN-Je-vcn" secondAttribute="leading" id="Yax-P0-fpV"/>
                             <constraint firstItem="Q9m-m9-ZwI" firstAttribute="trailing" secondItem="jaN-Je-vcn" secondAttribute="trailing" id="ZVx-ym-V6N"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="GsL-IN-YJt" secondAttribute="bottom" constant="30" id="aOZ-VQ-OY1"/>
                         </constraints>
                     </view>
                     <connections>

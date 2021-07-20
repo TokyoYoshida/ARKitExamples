@@ -28,11 +28,13 @@ class HumanStencilViewController: UIViewController {
     }()
 
     private var texture: MTLTexture!
-    
     lazy private var renderer = HumanStencilRenderer(device: device)
+    lazy private var blitRenderer = BlitRenderer(device: device)
     
     // Human Stencil
     lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: mtkView)
+    private var storedCameraTexture: MTLTexture?
+    private var requestStoreCameraTexture: Bool = false
 
     var orientation: UIInterfaceOrientation {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
@@ -74,6 +76,10 @@ class HumanStencilViewController: UIViewController {
         initMatteGenerator()
         initMetal()
     }
+
+    @IBAction func tappedScanButton(_ sender: Any) {
+        requestStoreCameraTexture = true
+    }
 }
 
 extension HumanStencilViewController: MTKViewDelegate {
@@ -107,6 +113,11 @@ extension HumanStencilViewController: MTKViewDelegate {
         
         guard let alphaTexture = getAlphaTexture(commandBuffer) else {return}
         renderer.update(commandBuffer, cameraTexture: cameraTexture, textureY: CVMetalTextureGetTexture(textureY)!, textureCbCr: CVMetalTextureGetTexture(textureCbCr)!, alphaTexture: alphaTexture, drawable: drawable)
+        
+        if requestStoreCameraTexture {
+            requestStoreCameraTexture = false
+            
+        }
         
         
         commandBuffer.present(drawable)
