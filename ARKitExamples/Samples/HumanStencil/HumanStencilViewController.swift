@@ -116,7 +116,7 @@ extension HumanStencilViewController: MTKViewDelegate {
         
         if requestStoreCameraTexture {
             requestStoreCameraTexture = false
-            
+            blitRenderer.update(commandBuffer, texture: cameraTexture, destTexture: storedCameraTexture as! MTLTexture)
         }
         
         

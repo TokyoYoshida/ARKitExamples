@@ -28,10 +28,10 @@ class BlitRenderer {
         buildPipeline()
     }
     
-    func update(_ commandBuffer: MTLCommandBuffer, texture: MTLTexture, drawable: CAMetalDrawable) {
+    func update(_ commandBuffer: MTLCommandBuffer, texture: MTLTexture, destTexture: MTLTexture) {
 
-        let w = min(texture.width, drawable.texture.width)
-        let h = min(texture.height, drawable.texture.height)
+        let w = min(texture.width, destTexture.width)
+        let h = min(texture.height, destTexture.height)
         
         let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
         
@@ -40,7 +40,7 @@ class BlitRenderer {
                           sourceLevel: 0,
                           sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
                           sourceSize: MTLSizeMake(w, h, texture.depth),
-                          to: drawable.texture,
+                          to: destTexture,
                           destinationSlice: 0,
                           destinationLevel: 0,
                           destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
