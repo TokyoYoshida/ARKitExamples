@@ -14,7 +14,6 @@ class HumanStencilRenderer {
     private let device: MTLDevice
     private var renderPipeline: MTLRenderPipelineState!
     private var imagePlaneVertexBuffer: MTLBuffer!
-    private var scenePlaneVertexBuffer: MTLBuffer!
 
     let kImagePlaneVertexData: [Float] = [
         -1.0, -1.0, 0.0, 1.0,
@@ -36,9 +35,6 @@ class HumanStencilRenderer {
             let imagePlaneVertexDataCount = kImagePlaneVertexData.count * MemoryLayout<Float>.size
             imagePlaneVertexBuffer = device.makeBuffer(bytes: kImagePlaneVertexData, length: imagePlaneVertexDataCount, options: [])
             imagePlaneVertexBuffer.label = "ImagePlaneVertexBuffer"
-
-            scenePlaneVertexBuffer = device.makeBuffer(bytes: kImagePlaneVertexData, length: imagePlaneVertexDataCount, options: [])
-            scenePlaneVertexBuffer.label = "ScenePlaneVertexBuffer"
         }
 
         self.device = device
@@ -58,11 +54,8 @@ class HumanStencilRenderer {
         
         renderEncoder.setRenderPipelineState(renderPipeline)
         renderEncoder.setVertexBuffer(imagePlaneVertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(scenePlaneVertexBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentTexture(cameraTexture, index: 0)
-        renderEncoder.setFragmentTexture(textureY, index: 1)
-        renderEncoder.setFragmentTexture(textureCbCr, index: 2)
-        renderEncoder.setFragmentTexture(alphaTexture, index: 3)
+        renderEncoder.setFragmentTexture(alphaTexture, index: 1)
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
         renderEncoder.endEncoding()
