@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E30B33226A57FE00019CA0A /* BlitRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30B33126A57FE00019CA0A /* BlitRenderer.swift */; };
+		1E30B33626A582300019CA0A /* SimpleShaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30B33526A582300019CA0A /* SimpleShaderRenderer.swift */; };
+		1E30B33926A582F50019CA0A /* SimpleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E30B33726A582F50019CA0A /* SimpleShader.metal */; };
+		1E30B33B26A584EF0019CA0A /* HumanStencilRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30B33A26A584EF0019CA0A /* HumanStencilRenderer.swift */; };
+		1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */; };
+		1E8671D926A4025F00B8F714 /* ARFrame+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */; };
+		1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */; };
 		1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87326A2B1F900006E06 /* AppDelegate.swift */; };
 		1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */; };
 		1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87726A2B1F900006E06 /* ViewController.swift */; };
-		1ED1C87B26A2B1F900006E06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C87926A2B1F900006E06 /* Main.storyboard */; };
 		1ED1C87D26A2B1FB00006E06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C87C26A2B1FB00006E06 /* Assets.xcassets */; };
 		1ED1C88026A2B1FB00006E06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C87E26A2B1FB00006E06 /* LaunchScreen.storyboard */; };
 		1ED1C88B26A2B1FB00006E06 /* ARKitExamplesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C88A26A2B1FB00006E06 /* ARKitExamplesTests.swift */; };
 		1ED1C89626A2B1FB00006E06 /* ARKitExamplesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C89526A2B1FB00006E06 /* ARKitExamplesUITests.swift */; };
+		1ED1C8A726A2B2EB00006E06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A326A2B2EB00006E06 /* Main.storyboard */; };
+		1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */; };
+		1ED1C8A926A2B2EB00006E06 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */; };
+		1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */; };
+		1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */; };
+		1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */; };
+		1ED6B28826A5636700FBA225 /* YCbCrToRGBConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,11 +48,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E30B33126A57FE00019CA0A /* BlitRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlitRenderer.swift; sourceTree = "<group>"; };
+		1E30B33526A582300019CA0A /* SimpleShaderRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleShaderRenderer.swift; sourceTree = "<group>"; };
+		1E30B33726A582F50019CA0A /* SimpleShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SimpleShader.metal; sourceTree = "<group>"; };
+		1E30B33A26A584EF0019CA0A /* HumanStencilRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanStencilRenderer.swift; sourceTree = "<group>"; };
+		1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Ext.swift"; sourceTree = "<group>"; };
+		1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARFrame+Ext.swift"; sourceTree = "<group>"; };
+		1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HumanStencilShaders.metal; sourceTree = "<group>"; };
 		1ED1C87026A2B1F900006E06 /* ARKitExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED1C87326A2B1F900006E06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1ED1C87726A2B1F900006E06 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1ED1C87A26A2B1F900006E06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1ED1C87C26A2B1FB00006E06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1ED1C87F26A2B1FB00006E06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1ED1C88126A2B1FB00006E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +68,14 @@
 		1ED1C89126A2B1FB00006E06 /* ARKitExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARKitExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED1C89526A2B1FB00006E06 /* ARKitExamplesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARKitExamplesUITests.swift; sourceTree = "<group>"; };
 		1ED1C89726A2B1FB00006E06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ED1C8A326A2B2EB00006E06 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
+		1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
+		1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanStencilViewController.swift; sourceTree = "<group>"; };
+		1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HumanStencil.storyboard; sourceTree = "<group>"; };
+		1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YCbCrToRGBConverter.swift; sourceTree = "<group>"; };
+		1ED6B28D26A5685000FBA225 /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +103,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E8671D526A4008300B8F714 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */,
+				1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */,
+				1ED6B28726A5636700FBA225 /* YCbCrToRGBConverter.swift */,
+				1E30B33526A582300019CA0A /* SimpleShaderRenderer.swift */,
+				1E30B33126A57FE00019CA0A /* BlitRenderer.swift */,
+				1E30B33726A582F50019CA0A /* SimpleShader.metal */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		1ED1C86726A2B1F900006E06 = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +142,11 @@
 				1ED1C87326A2B1F900006E06 /* AppDelegate.swift */,
 				1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */,
 				1ED1C87726A2B1F900006E06 /* ViewController.swift */,
-				1ED1C87926A2B1F900006E06 /* Main.storyboard */,
+				1ED1C8A326A2B2EB00006E06 /* Main.storyboard */,
+				1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */,
+				1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */,
+				1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */,
+				1ED1C8AB26A2B2EF00006E06 /* Samples */,
 				1ED1C87C26A2B1FB00006E06 /* Assets.xcassets */,
 				1ED1C87E26A2B1FB00006E06 /* LaunchScreen.storyboard */,
 				1ED1C88126A2B1FB00006E06 /* Info.plist */,
@@ -126,6 +170,27 @@
 				1ED1C89726A2B1FB00006E06 /* Info.plist */,
 			);
 			path = ARKitExamplesUITests;
+			sourceTree = "<group>";
+		};
+		1ED1C8AB26A2B2EF00006E06 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				1E8671D526A4008300B8F714 /* Common */,
+				1ED1C8AC26A2B2FC00006E06 /* HumanStencil */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
+		1ED1C8AC26A2B2FC00006E06 /* HumanStencil */ = {
+			isa = PBXGroup;
+			children = (
+				1ED1C8AE26A2B30700006E06 /* HumanStencil.storyboard */,
+				1ED1C8AD26A2B30700006E06 /* HumanStencilViewController.swift */,
+				1E30B33A26A584EF0019CA0A /* HumanStencilRenderer.swift */,
+				1ED6B28D26A5685000FBA225 /* ShaderTypes.h */,
+				1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */,
+			);
+			path = HumanStencil;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,9 +296,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ED1C8A726A2B2EB00006E06 /* Main.storyboard in Resources */,
+				1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */,
 				1ED1C88026A2B1FB00006E06 /* LaunchScreen.storyboard in Resources */,
 				1ED1C87D26A2B1FB00006E06 /* Assets.xcassets in Resources */,
-				1ED1C87B26A2B1F900006E06 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +324,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E8671D926A4025F00B8F714 /* ARFrame+Ext.swift in Sources */,
 				1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */,
+				1ED1C8A926A2B2EB00006E06 /* MenuViewController.swift in Sources */,
+				1ED1C8A826A2B2EB00006E06 /* MenuItemCell.swift in Sources */,
+				1E30B33226A57FE00019CA0A /* BlitRenderer.swift in Sources */,
+				1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */,
+				1E30B33626A582300019CA0A /* SimpleShaderRenderer.swift in Sources */,
+				1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */,
+				1E30B33B26A584EF0019CA0A /* HumanStencilRenderer.swift in Sources */,
+				1ED6B28826A5636700FBA225 /* YCbCrToRGBConverter.swift in Sources */,
+				1ED1C8AA26A2B2EB00006E06 /* MenuDataSource.swift in Sources */,
+				1E30B33926A582F50019CA0A /* SimpleShader.metal in Sources */,
 				1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */,
 				1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */,
+				1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,14 +374,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1ED1C87926A2B1F900006E06 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1ED1C87A26A2B1F900006E06 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1ED1C87E26A2B1FB00006E06 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -445,6 +515,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Examples.app.ARKitExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ARKitExamples/Samples/HumanStencil/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -464,6 +535,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = Examples.app.ARKitExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ARKitExamples/Samples/HumanStencil/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
