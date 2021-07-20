@@ -11,6 +11,8 @@ import MetalKit
 import CoreImage
 
 class HumanStencilViewController: UIViewController {
+    @IBOutlet weak var mtkView: MTKView!
+    
     // ARKit
     private var session: ARSession!
     var alphaTexture: MTLTexture?
@@ -26,9 +28,7 @@ class HumanStencilViewController: UIViewController {
     }()
 
     private var texture: MTLTexture!
-    var mtkView: MTKView {
-        return view as! MTKView
-    }
+    
     lazy private var renderer = HumanStencilRenderer(device: device)
     
     // Human Stencil
