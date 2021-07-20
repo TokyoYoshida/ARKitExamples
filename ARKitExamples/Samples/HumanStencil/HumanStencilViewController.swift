@@ -71,10 +71,21 @@ class HumanStencilViewController: UIViewController {
             session.delegate = self
             runARSession()
         }
+        func createTexture() {
+            let width = mtkView.currentDrawable!.texture.width
+            let height = mtkView.currentDrawable!.texture.height
+
+            let colorDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: mtkView.colorPixelFormat,
+                                                                 width: width, height: height, mipmapped: false)
+            colorDesc.usage = MTLTextureUsage(rawValue: MTLTextureUsage.renderTarget.rawValue | MTLTextureUsage.shaderRead.rawValue)
+
+            storedCameraTexture =  device.makeTexture(descriptor: colorDesc)
+        }
         super.viewDidLoad()
         initARSession()
         initMatteGenerator()
         initMetal()
+        createTexture()
     }
 
     @IBAction func tappedScanButton(_ sender: Any) {
