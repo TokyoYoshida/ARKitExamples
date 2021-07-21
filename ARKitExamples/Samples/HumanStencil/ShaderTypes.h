@@ -11,6 +11,9 @@ Types and enums that are shared between shaders and the host app code.
 
 #include <simd/simd.h>
 
+struct Uniforms {
+    float time;
+};
 
 // Buffer index values shared between shader and C code to ensure Metal shader buffer inputs match
 //   Metal API buffer set calls

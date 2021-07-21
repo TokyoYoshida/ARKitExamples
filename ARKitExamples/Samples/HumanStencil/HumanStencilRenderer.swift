@@ -14,6 +14,8 @@ class HumanStencilRenderer {
     private let device: MTLDevice
     private var renderPipeline: MTLRenderPipelineState!
     private var imagePlaneVertexBuffer: MTLBuffer!
+    private var uniforms = Uniforms(time: Float(0.0))
+    var preferredFramesTime: Float!
 
     let kImagePlaneVertexData: [Float] = [
         -1.0, -1.0, 0.0, 1.0,
@@ -22,7 +24,7 @@ class HumanStencilRenderer {
         1.0, 1.0, 1.0, 0.0
     ]
 
-    init(device: MTLDevice) {
+    init(device: MTLDevice, preferredFramesTime: Float) {
         func buildPipeline() {
             guard let library = device.makeDefaultLibrary() else {fatalError()}
             let descriptor = MTLRenderPipelineDescriptor()
@@ -38,12 +40,15 @@ class HumanStencilRenderer {
         }
 
         self.device = device
+        self.preferredFramesTime = preferredFramesTime
         buildPipeline()
         buildBuffers()
     }
     
     func update(_ commandBuffer: MTLCommandBuffer, cameraTexture: MTLTexture, storedCameraTexture: MTLTexture, alphaTexture: MTLTexture, drawable: CAMetalDrawable) {
         
+        uniforms.time += preferredFramesTime
+
         let renderPassDescriptor: MTLRenderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
 
@@ -57,6 +62,7 @@ class HumanStencilRenderer {
         renderEncoder.setFragmentTexture(cameraTexture, index: 0)
         renderEncoder.setFragmentTexture(alphaTexture, index: 1)
         renderEncoder.setFragmentTexture(storedCameraTexture, index: 2)
+        renderEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<Uniforms>.stride, index: 0)
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
         renderEncoder.endEncoding()

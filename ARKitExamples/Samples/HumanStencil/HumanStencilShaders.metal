@@ -180,7 +180,8 @@ typedef struct {
     float2 texCoordCamera;
 } CompositeColorInOut;
 
-float4 fishEye(float2 uv, texture2d<float, access::sample> texture) {
+// quote: https://www.shadertoy.com/view/3dBSWD
+float4 fishEye(float2 uv, texture2d<float, access::sample> texture, float iTime) {
     constexpr sampler s(address::clamp_to_edge, filter::linear);
 
     float2 ndcPos = uv * 2.0 - 1.0;
@@ -189,7 +190,7 @@ float4 fishEye(float2 uv, texture2d<float, access::sample> texture) {
     
     //float u_angle = -2.4;
     
-    float u_angle = -2.4 * sin(1 * 2.0);
+    float u_angle = -2.4 * sin(iTime * 2.0);
     
     float eye_angle = abs(u_angle);
     float half_angle = eye_angle/2.0;
@@ -243,7 +244,8 @@ vertex CompositeColorInOut compositeImageVertexTransform(const device CompositeV
 fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]],
                                             texture2d<float, access::sample> cameraColorTexture [[ texture(0) ]],
                                             texture2d<float, access::sample> alphaTexture [[ texture(1) ]],
-                                            texture2d<float, access::sample> storedCameraTexture [[ texture(2) ]])
+                                            texture2d<float, access::sample> storedCameraTexture [[ texture(2) ]],
+                                            constant Uniforms &uniforms [[buffer(0)]])
 {
     constexpr sampler s(address::clamp_to_edge, filter::linear);
 
@@ -256,7 +258,7 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
 
     half showOccluder = 1.0;
 
-    half4 displacedCol = half4(fishEye(cameraTexCoord, storedCameraTexture));
+    half4 displacedCol = half4(fishEye(cameraTexCoord, storedCameraTexture, uniforms.time*10));
     half4 occluderResult = mix(sceneColor, displacedCol, alpha);
     half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
     return mattingResult;

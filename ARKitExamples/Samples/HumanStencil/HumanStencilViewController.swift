@@ -28,9 +28,9 @@ class HumanStencilViewController: UIViewController {
     }()
 
     private var texture: MTLTexture!
-    lazy private var renderer = HumanStencilRenderer(device: device)
+    lazy private var renderer = HumanStencilRenderer(device: device, preferredFramesTime: Float(mtkView.preferredFramesPerSecond))
     lazy private var blitRenderer = BlitRenderer(device: device)
-    
+
     // Human Stencil
     lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: mtkView)
     private var storedCameraTexture: MTLTexture?
