@@ -76,7 +76,7 @@ class HumanStencilViewController: UIViewController {
             let height = mtkView.currentDrawable!.texture.height
 
             let colorDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: mtkView.colorPixelFormat,
-                                                                 width: width, height: height, mipmapped: false)
+                                                                 width: height, height: width, mipmapped: false)
             colorDesc.usage = MTLTextureUsage(rawValue: MTLTextureUsage.renderTarget.rawValue | MTLTextureUsage.shaderRead.rawValue)
 
             storedCameraTexture =  device.makeTexture(descriptor: colorDesc)
@@ -136,7 +136,7 @@ extension HumanStencilViewController: MTKViewDelegate {
         commandBuffer.commit()
         
         commandBuffer.waitUntilCompleted()
-        let image = CIImage(mtlTexture: ycbcrConverter.sceneColorTexture, options:nil)
+        let image = CIImage(mtlTexture: storedCameraTexture!, options:nil)
     }
 }
 
