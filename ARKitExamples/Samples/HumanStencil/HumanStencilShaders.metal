@@ -194,20 +194,22 @@ vertex CompositeColorInOut compositeImageVertexTransform(const device CompositeV
 }
 
 fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]],
-                                    texture2d<float, access::sample> cameraColorTexture [[ texture(0) ]],
-                                    texture2d<float, access::sample> alphaTexture [[ texture(1) ]])
+                                            texture2d<float, access::sample> cameraColorTexture [[ texture(0) ]],
+                                            texture2d<float, access::sample> alphaTexture [[ texture(1) ]],
+                                            texture2d<float, access::sample> storedCameraTexture [[ texture(2) ]])
 {
     constexpr sampler s(address::clamp_to_edge, filter::linear);
 
     float2 cameraTexCoord = in.texCoordCamera;
 
     half4 sceneColor = half4(cameraColorTexture.sample(s, cameraTexCoord));
+    half4 storedColor = half4(storedCameraTexture.sample(s, cameraTexCoord));
 
     half alpha = half(alphaTexture.sample(s, cameraTexCoord).r);
 
     half showOccluder = 1.0;
 
-    half4 displacedCol = sceneColor + half4(0.2,0,0,0);
+    half4 displacedCol = storedColor + half4(0.2,0,0,0);
     half4 occluderResult = mix(sceneColor, displacedCol, alpha);
     half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
     return mattingResult;

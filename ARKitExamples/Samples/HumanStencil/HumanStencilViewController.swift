@@ -123,7 +123,7 @@ extension HumanStencilViewController: MTKViewDelegate {
         guard let cameraTexture = ycbcrConverter.sceneColorTexture else {return}
         
         guard let alphaTexture = getAlphaTexture(commandBuffer) else {return}
-        renderer.update(commandBuffer, cameraTexture: cameraTexture, textureY: CVMetalTextureGetTexture(textureY)!, textureCbCr: CVMetalTextureGetTexture(textureCbCr)!, alphaTexture: alphaTexture, drawable: drawable)
+        renderer.update(commandBuffer, cameraTexture: cameraTexture, storedCameraTexture: storedCameraTexture!, alphaTexture: alphaTexture, drawable: drawable)
         
         if requestStoreCameraTexture {
             requestStoreCameraTexture = false

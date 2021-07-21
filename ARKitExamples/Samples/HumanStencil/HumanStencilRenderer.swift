@@ -42,7 +42,7 @@ class HumanStencilRenderer {
         buildBuffers()
     }
     
-    func update(_ commandBuffer: MTLCommandBuffer, cameraTexture: MTLTexture, textureY: MTLTexture, textureCbCr: MTLTexture,alphaTexture: MTLTexture, drawable: CAMetalDrawable) {
+    func update(_ commandBuffer: MTLCommandBuffer, cameraTexture: MTLTexture, storedCameraTexture: MTLTexture, alphaTexture: MTLTexture, drawable: CAMetalDrawable) {
         
         let renderPassDescriptor: MTLRenderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -56,6 +56,7 @@ class HumanStencilRenderer {
         renderEncoder.setVertexBuffer(imagePlaneVertexBuffer, offset: 0, index: 0)
         renderEncoder.setFragmentTexture(cameraTexture, index: 0)
         renderEncoder.setFragmentTexture(alphaTexture, index: 1)
+        renderEncoder.setFragmentTexture(storedCameraTexture, index: 2)
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
 
         renderEncoder.endEncoding()
