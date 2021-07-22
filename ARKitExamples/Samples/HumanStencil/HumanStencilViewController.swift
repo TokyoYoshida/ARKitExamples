@@ -10,7 +10,7 @@ import Metal
 import MetalKit
 import CoreImage
 
-class HumanStencilViewController: UIViewController {
+class HumanStencilViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var mtkView: MTKView!
     
     // ARKit
@@ -81,15 +81,31 @@ class HumanStencilViewController: UIViewController {
 
             storedCameraTexture =  device.makeTexture(descriptor: colorDesc)
         }
+        func initGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+            tapGesture.delegate = self
+            self.view.addGestureRecognizer(tapGesture)
+        }
         super.viewDidLoad()
         initARSession()
         initMatteGenerator()
         initMetal()
         createTexture()
+        initGesture()
     }
-
-    @IBAction func tappedScanButton(_ sender: Any) {
-        requestStoreCameraTexture = true
+    
+    @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
+        func requestStoreCamera() {
+            requestStoreCameraTexture = true
+        }
+        func toggleNavigationBar() {
+            let hidden = navigationController?.isNavigationBarHidden ?? false
+            let toggled = !hidden
+            navigationController?.setNavigationBarHidden(toggled    , animated: true)
+            
+        }
+        requestStoreCamera()
+        toggleNavigationBar()
     }
 }
 
