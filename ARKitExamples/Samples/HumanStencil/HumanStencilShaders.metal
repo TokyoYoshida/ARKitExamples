@@ -180,6 +180,54 @@ typedef struct {
     float2 texCoordCamera;
 } CompositeColorInOut;
 
+// quote: https://www.shadertoy.com/view/3dBSWD
+float4 fishEye(float2 uv, texture2d<float, access::sample> texture, float iTime) {
+    constexpr sampler s(address::clamp_to_edge, filter::linear);
+
+    float2 ndcPos = uv * 2.0 - 1.0;
+
+    float aspect = 1;
+    
+    //float u_angle = -2.4;
+    
+    float u_angle = -2.4 * sin(iTime * 2.0);
+    
+    float eye_angle = abs(u_angle);
+    float half_angle = eye_angle/2.0;
+    float half_dist = tan(half_angle);
+
+    float2  vp_scale = float2(aspect, 1.0);
+    float2  P = ndcPos * vp_scale;
+    
+    float vp_dia   = length(vp_scale);
+    float rel_dist = length(P) / vp_dia;
+    float2  rel_P = normalize(P) / normalize(vp_scale);
+
+    float2 pos_prj = ndcPos;
+    if (u_angle > 0.0)
+    {
+        float beta = rel_dist * half_angle;
+        pos_prj = rel_P * tan(beta) / half_dist;
+    }
+    else if (u_angle < 0.0)
+    {
+        float beta = atan(rel_dist * half_dist);
+        pos_prj = rel_P * beta / half_angle;
+    }
+
+    float2 uv_prj = pos_prj * 0.5 + 0.5;
+    float2 rangeCheck = step(float2(0.0), uv_prj) * step(uv_prj, float2(1.0));
+    float4 color;
+    if (rangeCheck.x * rangeCheck.y < 0.5)
+        color = float4(1.0, 1.0, 1.0, 1.0);
+    else {
+        float4 texColor = texture.sample(s, uv_prj.xy);
+        color = float4( texColor.rgb, 1.0 );
+    }
+    
+    return color;
+}
+
 // Composite the image vertex function.
 vertex CompositeColorInOut compositeImageVertexTransform(const device CompositeVertex* cameraVertices [[ buffer(0) ]],
                                                          unsigned int vid [[ vertex_id ]]) {
@@ -194,20 +242,23 @@ vertex CompositeColorInOut compositeImageVertexTransform(const device CompositeV
 }
 
 fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]],
-                                    texture2d<float, access::sample> cameraColorTexture [[ texture(0) ]],
-                                    texture2d<float, access::sample> alphaTexture [[ texture(1) ]])
+                                            texture2d<float, access::sample> cameraColorTexture [[ texture(0) ]],
+                                            texture2d<float, access::sample> alphaTexture [[ texture(1) ]],
+                                            texture2d<float, access::sample> storedCameraTexture [[ texture(2) ]],
+                                            constant Uniforms &uniforms [[buffer(0)]])
 {
     constexpr sampler s(address::clamp_to_edge, filter::linear);
 
     float2 cameraTexCoord = in.texCoordCamera;
 
     half4 sceneColor = half4(cameraColorTexture.sample(s, cameraTexCoord));
+    half4 storedColor = half4(storedCameraTexture.sample(s, cameraTexCoord));
 
     half alpha = half(alphaTexture.sample(s, cameraTexCoord).r);
 
     half showOccluder = 1.0;
 
-    half4 displacedCol = half4(1,0,0,1);
+    half4 displacedCol = storedColor;
     half4 occluderResult = mix(sceneColor, displacedCol, alpha);
     half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
     return mattingResult;

@@ -10,7 +10,9 @@ import Metal
 import MetalKit
 import CoreImage
 
-class HumanStencilViewController: UIViewController {
+class HumanStencilViewController: UIViewController, UIGestureRecognizerDelegate {
+    @IBOutlet weak var mtkView: MTKView!
+    
     // ARKit
     private var session: ARSession!
     var alphaTexture: MTLTexture?
@@ -26,13 +28,13 @@ class HumanStencilViewController: UIViewController {
     }()
 
     private var texture: MTLTexture!
-    var mtkView: MTKView {
-        return view as! MTKView
-    }
-    lazy private var renderer = HumanStencilRenderer(device: device)
-    
+    lazy private var renderer = HumanStencilRenderer(device: device, preferredFramesTime: Float(mtkView.preferredFramesPerSecond))
+    lazy private var blitRenderer = BlitRenderer(device: device)
+
     // Human Stencil
     lazy private var ycbcrConverter = YCbCrToRGBConverter(device, session: session, view: mtkView)
+    private var storedCameraTexture: MTLTexture?
+    private var requestStoreCameraTexture: Bool = false
 
     var orientation: UIInterfaceOrientation {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
@@ -69,10 +71,41 @@ class HumanStencilViewController: UIViewController {
             session.delegate = self
             runARSession()
         }
+        func createTexture() {
+            let width = mtkView.currentDrawable!.texture.width
+            let height = mtkView.currentDrawable!.texture.height
+
+            let colorDesc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: mtkView.colorPixelFormat,
+                                                                 width: height, height: width, mipmapped: false)
+            colorDesc.usage = MTLTextureUsage(rawValue: MTLTextureUsage.renderTarget.rawValue | MTLTextureUsage.shaderRead.rawValue)
+
+            storedCameraTexture =  device.makeTexture(descriptor: colorDesc)
+        }
+        func initGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+            tapGesture.delegate = self
+            self.view.addGestureRecognizer(tapGesture)
+        }
         super.viewDidLoad()
         initARSession()
         initMatteGenerator()
         initMetal()
+        createTexture()
+        initGesture()
+    }
+    
+    @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
+        func requestStoreCamera() {
+            requestStoreCameraTexture = true
+        }
+        func toggleNavigationBar() {
+            let hidden = navigationController?.isNavigationBarHidden ?? false
+            let toggled = !hidden
+            navigationController?.setNavigationBarHidden(toggled    , animated: true)
+            
+        }
+        requestStoreCamera()
+        toggleNavigationBar()
     }
 }
 
@@ -106,7 +139,12 @@ extension HumanStencilViewController: MTKViewDelegate {
         guard let cameraTexture = ycbcrConverter.sceneColorTexture else {return}
         
         guard let alphaTexture = getAlphaTexture(commandBuffer) else {return}
-        renderer.update(commandBuffer, cameraTexture: cameraTexture, textureY: CVMetalTextureGetTexture(textureY)!, textureCbCr: CVMetalTextureGetTexture(textureCbCr)!, alphaTexture: alphaTexture, drawable: drawable)
+        renderer.update(commandBuffer, cameraTexture: cameraTexture, storedCameraTexture: storedCameraTexture!, alphaTexture: alphaTexture, drawable: drawable)
+        
+        if requestStoreCameraTexture {
+            requestStoreCameraTexture = false
+            blitRenderer.update(commandBuffer, texture: cameraTexture, destTexture: storedCameraTexture as! MTLTexture)
+        }
         
         
         commandBuffer.present(drawable)
@@ -114,7 +152,7 @@ extension HumanStencilViewController: MTKViewDelegate {
         commandBuffer.commit()
         
         commandBuffer.waitUntilCompleted()
-        let image = CIImage(mtlTexture: ycbcrConverter.sceneColorTexture, options:nil)
+        let image = CIImage(mtlTexture: storedCameraTexture!, options:nil)
     }
 }
 

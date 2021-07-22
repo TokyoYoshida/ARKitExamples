@@ -11,11 +11,10 @@ import MetalKit
 import CoreImage
 
 class BlitRenderer {
-    private let view: MTKView
     private let device: MTLDevice
     private var renderPipeline: MTLRenderPipelineState!
 
-    init(device: MTLDevice, view: MTKView) {
+    init(device: MTLDevice) {
         func buildPipeline() {
             guard let library = device.makeDefaultLibrary() else {fatalError()}
             let descriptor = MTLRenderPipelineDescriptor()
@@ -25,16 +24,14 @@ class BlitRenderer {
             renderPipeline = try! device.makeRenderPipelineState(descriptor: descriptor)
         }
 
-        self.view = view
         self.device = device
         buildPipeline()
     }
     
-    func update(_ commandBuffer: MTLCommandBuffer, texture: MTLTexture) {
-        guard let drawable = view.currentDrawable else {return}
+    func update(_ commandBuffer: MTLCommandBuffer, texture: MTLTexture, destTexture: MTLTexture) {
 
-        let w = min(texture.width, drawable.texture.width)
-        let h = min(texture.height, drawable.texture.height)
+        let w = min(texture.width, destTexture.width)
+        let h = min(texture.height, destTexture.height)
         
         let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
         
@@ -43,7 +40,7 @@ class BlitRenderer {
                           sourceLevel: 0,
                           sourceOrigin: MTLOrigin(x:0, y:0 ,z:0),
                           sourceSize: MTLSizeMake(w, h, texture.depth),
-                          to: drawable.texture,
+                          to: destTexture,
                           destinationSlice: 0,
                           destinationLevel: 0,
                           destinationOrigin: MTLOrigin(x:0, y:0 ,z:0))
