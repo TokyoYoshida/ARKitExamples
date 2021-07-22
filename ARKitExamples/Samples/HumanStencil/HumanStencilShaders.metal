@@ -258,7 +258,7 @@ fragment half4 compositeImageFragmentShader(CompositeColorInOut in [[ stage_in ]
 
     half showOccluder = 1.0;
 
-    half4 displacedCol = half4(fishEye(cameraTexCoord, storedCameraTexture, uniforms.time*10));
+    half4 displacedCol = storedColor;
     half4 occluderResult = mix(sceneColor, displacedCol, alpha);
     half4 mattingResult = mix(sceneColor, occluderResult, showOccluder);
     return mattingResult;
