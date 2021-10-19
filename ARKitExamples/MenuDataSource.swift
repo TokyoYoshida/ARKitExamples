@@ -29,6 +29,11 @@ class MenuViewModel {
             prefix: "Simple"
         ),
         MenuItem (
+            title: "Put Object",
+            description: "Place an object at the tapped position.",
+            prefix: "PutObject"
+        ),
+        MenuItem (
             title: "HumanStencil",
             description: "HumanStencil.",
             prefix: "HumanStencil"
