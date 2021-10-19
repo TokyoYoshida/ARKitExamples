@@ -21,6 +21,7 @@ class PutObjectViewController: UIViewController, UIGestureRecognizerDelegate {
             
             sceneView.debugOptions = [.showFeaturePoints]
             sceneView.automaticallyUpdatesLighting = true
+            sceneView.autoenablesDefaultLighting = true
 
             let configuration = ARWorldTrackingConfiguration()
             configuration.planeDetection = .horizontal
