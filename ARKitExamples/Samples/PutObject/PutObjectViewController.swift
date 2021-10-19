@@ -15,9 +15,15 @@ class PutObjectViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         func initARScene() {
-            sceneView.scene = SCNScene(named: "art.scnassets/ship.scn")!
+            sceneView.delegate = self
+
+            sceneView.scene = SCNScene()
+            
+            sceneView.debugOptions = [.showFeaturePoints]
+            sceneView.automaticallyUpdatesLighting = true
 
             let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = .horizontal
             
             sceneView.session.run(configuration)
         }
@@ -25,4 +31,30 @@ class PutObjectViewController: UIViewController, UIGestureRecognizerDelegate {
 
         initARScene()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        
+        let touchPos = touch.location(in: sceneView)
+        
+        let hitTest = sceneView.hitTest(touchPos, types: .existingPlaneUsingExtent)
+        if !hitTest.isEmpty {
+            let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
+            sceneView.session.add(anchor: anchor)
+        }
+    }
+}
+
+extension PutObjectViewController: ARSCNViewDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard !(anchor is ARPlaneAnchor) else { return }
+        
+        let sphereNode = SCNNode()
+        
+        sphereNode.geometry = SCNSphere(radius: 0.05)
+        sphereNode.position.y += Float(0.05)
+        
+        node.addChildNode(sphereNode)
+    }
+    
 }
