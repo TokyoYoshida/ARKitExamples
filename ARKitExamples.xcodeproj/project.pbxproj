@@ -14,6 +14,9 @@
 		1E8671D726A4008E00B8F714 /* CVPixelBuffer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */; };
 		1E8671D926A4025F00B8F714 /* ARFrame+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */; };
 		1E8671DB26A403A700B8F714 /* HumanStencilShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */; };
+		1EC390CD271EB2B900C580A2 /* Simple.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC390CB271EB29200C580A2 /* Simple.storyboard */; };
+		1EC390CE271EB2BD00C580A2 /* SimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC390CC271EB29800C580A2 /* SimpleViewController.swift */; };
+		1EC3910B271EB43000C580A2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EC3910A271EB43000C580A2 /* art.scnassets */; };
 		1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87326A2B1F900006E06 /* AppDelegate.swift */; };
 		1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */; };
 		1ED1C87826A2B1F900006E06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1C87726A2B1F900006E06 /* ViewController.swift */; };
@@ -55,6 +58,9 @@
 		1E8671D626A4008E00B8F714 /* CVPixelBuffer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Ext.swift"; sourceTree = "<group>"; };
 		1E8671D826A4025F00B8F714 /* ARFrame+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARFrame+Ext.swift"; sourceTree = "<group>"; };
 		1E8671DA26A403A700B8F714 /* HumanStencilShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HumanStencilShaders.metal; sourceTree = "<group>"; };
+		1EC390CB271EB29200C580A2 /* Simple.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Simple.storyboard; sourceTree = "<group>"; };
+		1EC390CC271EB29800C580A2 /* SimpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleViewController.swift; sourceTree = "<group>"; };
+		1EC3910A271EB43000C580A2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		1ED1C87026A2B1F900006E06 /* ARKitExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ED1C87326A2B1F900006E06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ED1C87526A2B1F900006E06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +122,15 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		1EC390CA271EB27800C580A2 /* Simple */ = {
+			isa = PBXGroup;
+			children = (
+				1EC390CB271EB29200C580A2 /* Simple.storyboard */,
+				1EC390CC271EB29800C580A2 /* SimpleViewController.swift */,
+			);
+			path = Simple;
+			sourceTree = "<group>";
+		};
 		1ED1C86726A2B1F900006E06 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +161,7 @@
 				1ED1C8A626A2B2EB00006E06 /* MenuDataSource.swift */,
 				1ED1C8A426A2B2EB00006E06 /* MenuItemCell.swift */,
 				1ED1C8A526A2B2EB00006E06 /* MenuViewController.swift */,
+				1EC3910A271EB43000C580A2 /* art.scnassets */,
 				1ED1C8AB26A2B2EF00006E06 /* Samples */,
 				1ED1C87C26A2B1FB00006E06 /* Assets.xcassets */,
 				1ED1C87E26A2B1FB00006E06 /* LaunchScreen.storyboard */,
@@ -176,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				1E8671D526A4008300B8F714 /* Common */,
+				1EC390CA271EB27800C580A2 /* Simple */,
 				1ED1C8AC26A2B2FC00006E06 /* HumanStencil */,
 			);
 			path = Samples;
@@ -297,8 +314,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ED1C8A726A2B2EB00006E06 /* Main.storyboard in Resources */,
+				1EC3910B271EB43000C580A2 /* art.scnassets in Resources */,
 				1ED1C8B026A2B30700006E06 /* HumanStencil.storyboard in Resources */,
 				1ED1C88026A2B1FB00006E06 /* LaunchScreen.storyboard in Resources */,
+				1EC390CD271EB2B900C580A2 /* Simple.storyboard in Resources */,
 				1ED1C87D26A2B1FB00006E06 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +357,7 @@
 				1E30B33926A582F50019CA0A /* SimpleShader.metal in Sources */,
 				1ED1C87426A2B1F900006E06 /* AppDelegate.swift in Sources */,
 				1ED1C87626A2B1F900006E06 /* SceneDelegate.swift in Sources */,
+				1EC390CE271EB2BD00C580A2 /* SimpleViewController.swift in Sources */,
 				1ED1C8AF26A2B30700006E06 /* HumanStencilViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

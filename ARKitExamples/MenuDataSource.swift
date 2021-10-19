@@ -24,6 +24,11 @@ struct MenuItem {
 class MenuViewModel {
     private let dataSource = [
         MenuItem (
+            title: "Simple",
+            description: "Simple AR.",
+            prefix: "Simple"
+        ),
+        MenuItem (
             title: "HumanStencil",
             description: "HumanStencil.",
             prefix: "HumanStencil"
