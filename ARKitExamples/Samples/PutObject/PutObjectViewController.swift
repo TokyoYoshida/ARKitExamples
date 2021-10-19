@@ -38,9 +38,10 @@ class PutObjectViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let touchPos = touch.location(in: sceneView)
         
-        let hitTest = sceneView.hitTest(touchPos, types: .existingPlaneUsingExtent)
-        if !hitTest.isEmpty {
-            let anchor = ARAnchor(transform: hitTest.first!.worldTransform)
+        guard let query = sceneView.raycastQuery(from: touchPos, allowing: .estimatedPlane, alignment: .any) else { return  }
+        let result = sceneView.session.raycast(query)
+        if !result.isEmpty {
+            let anchor = ARAnchor(transform: result.first!.worldTransform)
             sceneView.session.add(anchor: anchor)
         }
     }
